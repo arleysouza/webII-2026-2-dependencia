@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="https://www.cps.sp.gov.br/favicon.ico" />
+  <title>Laboratório REST</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+
+<body>
+  <header>
+    <h1>Laboratório REST<span>.</span></h1>
+    <p>Envie uma requisição. Explore a resposta. Entenda a conversa.</p>
+  </header>
+  <main>
+    <section class="panel" aria-labelledby="request-title">
+      <div class="section-title"><span class="step">01</span>
+        <h2 id="request-title">Requisição</h2>
+      </div>
+      <label for="example">Operação</label><select id="example"></select>
+      <p class="hint" id="example-hint"></p>
+      <form id="request-form">
+        <label for="base">Endereço base</label><input id="base" type="url" required>
+        <div class="request-line">
+          <div><label for="method">Método</label><select id="method" disabled>
+              <option>GET</option>
+              <option>POST</option>
+            </select></div>
+          <div><label for="path">Caminho do recurso</label><input id="path" value="/api/students" required></div>
+        </div>
+        <label for="body">Corpo da requisição · JSON</label><textarea id="body" rows="7" spellcheck="false"
+          aria-describedby="body-hint"></textarea>
+        <p id="body-hint" class="hint">POST cria recursos. GET não enviam corpo
+          neste laboratório.</p>
+        <button id="send" type="submit">Enviar requisição →</button>
+      </form>
+      <h3>Requisição preparada</h3>
+      <p class="hint">Método, URL e headers definidos por este cliente. O navegador pode acrescentar outros headers.</p>
+      <pre id="request-preview"></pre>
+    </section>
+    <section class="panel" aria-labelledby="response-title">
+      <div class="section-title"><span class="step">02</span>
+        <h2 id="response-title">Resposta</h2>
+      </div>
+      <div id="status" class="status" role="status" aria-live="polite">Aguardando a primeira requisição</div>
+      <p id="response-meta" class="hint">Os resultados aparecerão aqui.</p>
+      <h3>Headers da resposta</h3>
+      <p class="hint">Metadados HTTP: tipo de conteúdo, política de cache e informações do servidor.</p>
+      <pre id="response-headers">—</pre>
+      <h3>Corpo da resposta</h3>
+      <pre id="response-body">Envie um dos exemplos ao lado para começar.</pre>
+    </section>
+  </main>
+</body>
+
+</html>

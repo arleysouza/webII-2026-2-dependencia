@@ -1,0 +1,55 @@
+# As variáveis ${...} são lidas do .env ao lado deste arquivo.
+services:
+  database:
+    image: atv3-database:1.0
+    build: ./database
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${DB_PORT_HOST}:${DB_PORT}"
+    volumes:
+      - atv3_database_data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", 'pg_isready -U "$$POSTGRES_USER" -d "$$POSTGRES_DB"']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  server:
+    image: atv3-server:1.0
+    build: ./server
+    ports:
+      - "${SERVER_PORT_HOST}:${SERVER_PORT}"
+    environment:
+      SERVER_PORT: ${SERVER_PORT}
+      DB_HOST: database
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:' + process.env.SERVER_PORT + '/health', { signal: AbortSignal.timeout(3000) }).then(response => process.exit(response.status === 200 ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    depends_on:
+      database:
+        condition: service_healthy
+
+  front:
+    image: atv3-front:1.0
+    build: ./front
+    ports:
+      - "${FRONT_PORT_HOST}:80"
+    environment:
+      SERVER_PORT: ${SERVER_PORT}
+    depends_on:
+      server:
+        condition: service_healthy
+
+volumes:
+  atv3_database_data:
