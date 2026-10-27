@@ -294,39 +294,6 @@ Para encerrar os serviços:
 docker compose down
 ```
 
-### Conferir a entrega
-
-Em `server`, execute:
-
-```powershell
-npm run typecheck
-npm run build
-```
-
-Com a aplicação em execução, confira manualmente as operações abaixo pela API ou pela interface. Use nomes e RAs ainda não cadastrados e aproveite os identificadores retornados no cadastro.
-
-| Recurso | Operações a conferir |
-| --- | --- |
-| Alunos | `POST /api/students`, `GET /api/students`, `GET /api/students/:ra` |
-| Cursos | `POST /api/courses`, `GET /api/courses`, `GET /api/courses/:id` |
-| Matrículas | `POST /api/enrollments`, `GET /api/enrollments`, `GET /api/enrollments/student/:studentRa/course/:courseId` |
-
-Corpos de exemplo para cadastro:
-
-```json
-{ "ra": 123456, "name": "Ana Silva" }
-```
-
-```json
-{ "name": "Desenvolvimento Web" }
-```
-
-```json
-{ "studentRa": 123456, "courseId": 1 }
-```
-
-Na matrícula, substitua `courseId` pelo ID de um curso existente e use o RA de um aluno existente. Confira também entradas inválidas, buscas sem resultado e cadastros duplicados para verificar a preservação dos erros.
-
 ## Onde encontrar o código
 
 | Caminho | Responsabilidade |
