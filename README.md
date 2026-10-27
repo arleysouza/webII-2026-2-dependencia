@@ -57,7 +57,7 @@ Essa diferença é intencional. Ao concluir a atividade, cursos e matrículas de
 
 ## Diagramas de classes: estrutura atual
 
-Os diagramas usam Mermaid. Abra a visualização Markdown em um ambiente com suporte a Mermaid para vê-los renderizados. As funções de rotas e de composição aparecem como elementos com o estereótipo `function`; elas não são classes TypeScript.
+As funções de rotas e de composição aparecem como elementos com o estereótipo `function`; elas não são classes TypeScript.
 
 ### Alunos: dependências recebidas de fora
 
@@ -266,7 +266,6 @@ Preserve o módulo `students` como referência. Mantenha os endpoints, os corpos
 - A montagem de ambos os módulos fica em `app.ts`, usando o mesmo `db` recebido pela aplicação.
 - A verificação de tipos e a compilação passam, e as operações da API continuam funcionando.
 
-Explique também, com suas palavras: quem criava cada dependência antes da refatoração? Quem passou a criá-la? Por que o serviço agora pode usar outra implementação de repositório sem alterar suas regras de negócio?
 
 ## Executar a aplicação
 
@@ -287,26 +286,13 @@ Execute a cópia apenas se ainda não tiver `.env`, para preservar sua configura
 | API de matrículas | http://localhost:3002/api/enrollments |
 | PostgreSQL | `localhost:5433` |
 
-O banco aplica `database/init.sql` e `database/seed.sql` na primeira inicialização de um diretório de dados vazio. Os dados persistem no volume `aula3_database_data`.
+O banco aplica `database/init.sql` e `database/seed.sql` na primeira inicialização de um diretório de dados vazio. Os dados persistem no volume `atv3_database_data`.
 
 Para encerrar os serviços:
 
 ```powershell
 docker compose down
 ```
-
-### Desenvolvimento local do servidor
-
-Instale Node.js 24. Para executar o servidor fora do Docker, configure no `.env` o endereço do PostgreSQL acessível pela sua máquina. Se usar o banco do Compose, use `DB_HOST=localhost` e `DB_PORT=5433`. Essas alterações são para execução local; o servidor dentro do Compose usa o endereço interno do banco.
-
-```powershell
-docker compose up -d database
-cd server
-npm ci
-npm run dev
-```
-
-O servidor local usa `SERVER_PORT` (`3000` no modelo), portanto sua API fica em `http://localhost:3000/api`. A porta `3002` da tabela é a porta publicada pelo Docker para o servidor em contêiner.
 
 ### Conferir a entrega
 
